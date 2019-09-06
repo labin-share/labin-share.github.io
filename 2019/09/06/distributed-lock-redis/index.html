@@ -7,13 +7,17 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="redis 官网关于distributed lock的讨论 分布式锁redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/09/06/distributed-lock-redis/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="redis 官网关于distributed lock的讨论 分布式锁redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-04-14T13:54:04.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="redis 官网关于distributed lock的讨论 分布式锁redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,9 +64,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-distributed-lock-redis" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-distributed-lock-redis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/09/06/distributed-lock-redis/" class="article-date">
   <time datetime="2019-09-06T03:40:15.383Z" itemprop="datePublished">2019-09-06</time>
@@ -151,152 +153,19 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-distributed-lock-zookeeper" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/09/06/distributed-lock-zookeeper/" class="article-date">
-  <time datetime="2019-09-06T03:40:15.383Z" itemprop="datePublished">2019-09-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://mp.weixin.qq.com/s/u8QDlrDj3Rl1YjY4TyKMCA" target="_blank" rel="noopener">实现原理</a><br><a href="http://curator.apache.org/curator-recipes/index.html" target="_blank" rel="noopener">curator官网-能实现的功能</a></p>
-<h2 id="1-zookeeper分布式锁实现原理"><a href="#1-zookeeper分布式锁实现原理" class="headerlink" title="1. zookeeper分布式锁实现原理"></a>1. zookeeper分布式锁实现原理</h2><p>zookeeper有一种临时类型的节点和顺序节点，并且节点删除的时候会通知客户端。可以利用这些特性，做成分布式锁。</p>
-<ol>
-<li>进程1向zookeeper创建一个节点，该节点的编号假设是5</li>
-<li>拿出所有的节点，判断当前节点是否是最小节点<ol>
-<li>如果是，则获取锁</li>
-<li>如果不是，则让该节点注册watcher，检测前一个节点有没有被删除。并且进行休眠，知道节点删除，在watcher的回调里面，唤醒休眠的线程。</li>
-</ol>
-</li>
-</ol>
-<h3 id="1-1-为什么是临时类型的节点"><a href="#1-1-为什么是临时类型的节点" class="headerlink" title="1.1 为什么是临时类型的节点"></a>1.1 为什么是临时类型的节点</h3><p>临时节点有一个特点， 当客户端因为某些原因跟zk断开的之后，由于zk没有收到客户端的心跳，会认为客户端失效，从而会删除临时节点。这样能够避免因为线程或进程挂掉导致锁无法释放，造成死锁的情况。</p>
-<h3 id="1-2-为什么是顺序节点"><a href="#1-2-为什么是顺序节点" class="headerlink" title="1.2 为什么是顺序节点"></a>1.2 为什么是顺序节点</h3><p>当进程创建了一个节点之后，发现不是最小的节点，那么需要监控前一个节点，如果节点是有序的，那么可以直接的找到被监控的节点。</p>
-<h2 id="2-zookeeper实现分布式锁例子"><a href="#2-zookeeper实现分布式锁例子" class="headerlink" title="2. zookeeper实现分布式锁例子"></a>2. zookeeper实现分布式锁例子</h2><p>从maven repository下载<a href="https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper" target="_blank" rel="noopener">zookeeper依赖</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.4.13&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+  
+    <a href="/2019/09/06/distributed-lock-zookeeper/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">public class CuratorTest &#123;</span><br><span class="line">    @Test</span><br><span class="line">    public void testDistributedLock() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            DistributedLock distributedLock = new DistributedLock();</span><br><span class="line">            System.out.println(&quot;try to acquire lock.&quot;);</span><br><span class="line">            distributedLock.lock();</span><br><span class="line">            System.out.println(&quot;got the lock, something done.&quot;);</span><br><span class="line">            distributedLock.unlock();</span><br><span class="line">            System.out.println(&quot;unlock the lock.&quot;);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class DistributedLock &#123;</span><br><span class="line"></span><br><span class="line">        private ZooKeeper zk;</span><br><span class="line">        private String rootNode = &quot;/lock_node&quot;;</span><br><span class="line">        private String currentChildren = null;</span><br><span class="line">        public DistributedLock() throws IOException &#123;</span><br><span class="line">            final CountDownLatch countDownLatch = new CountDownLatch(1);</span><br><span class="line">            zk = new ZooKeeper(&quot;192.168.99.100:2181&quot;, 1000, new Watcher() &#123;</span><br><span class="line">                public void process(WatchedEvent watchedEvent) &#123;</span><br><span class="line">                    if (watchedEvent.getState() == Event.KeeperState.SyncConnected) &#123;</span><br><span class="line">                        countDownLatch.countDown();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            try &#123;</span><br><span class="line">                countDownLatch.await();</span><br><span class="line">                zk.create(rootNode, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                System.out.println(&quot;root node has existed.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void lock() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                currentChildren = zk.create(rootNode + &quot;/lock_node_sub&quot;, null, ZooDefs.Ids.OPEN_ACL_UNSAFE,</span><br><span class="line">                        CreateMode._SEQUENTIAL);</span><br><span class="line"></span><br><span class="line">                List&lt;String&gt; sortedChildren = getSortedChildren();</span><br><span class="line">                int currentIndex = sortedChildren.indexOf(currentChildren);</span><br><span class="line">                if (currentIndex == 0)</span><br><span class="line">                    return;</span><br><span class="line"></span><br><span class="line">                String preChildren = sortedChildren.get(currentIndex - 1);</span><br><span class="line">                synchronized (this) &#123;</span><br><span class="line">                    Stat preCurrentExists = zk.exists(preChildren, new Watcher() &#123;</span><br><span class="line">                        public void process(WatchedEvent watchedEvent) &#123;</span><br><span class="line">                            wakeup();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line"></span><br><span class="line">                    if (preCurrentExists == null)</span><br><span class="line">                        return;</span><br><span class="line">                    wait();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (KeeperException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void unlock() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                zk.delete(currentChildren,-1);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; catch (KeeperException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public List&lt;String&gt; getSortedChildren() &#123;</span><br><span class="line">            List&lt;String&gt; childrens = new ArrayList&lt;&gt;();</span><br><span class="line">            try &#123;</span><br><span class="line">                childrens = zk.getChildren(rootNode, false);</span><br><span class="line">                for(int i = 0; i &lt; childrens.size(); i++)&#123;</span><br><span class="line">                    childrens.set(i, rootNode+&quot;/&quot;+childrens.get(i));</span><br><span class="line">                &#125;</span><br><span class="line">                childrens.sort(new Comparator&lt;String&gt;() &#123;</span><br><span class="line">                    public int compare(String o1, String o2) &#123;</span><br><span class="line">                        return o1.compareTo(o2);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; catch (KeeperException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            return childrens;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private String getPreChildren(List&lt;String&gt; sortedChildren, String currentChildren) &#123;</span><br><span class="line">            int currenctIndex = sortedChildren.indexOf(currentChildren);</span><br><span class="line">            if (currenctIndex == 0)</span><br><span class="line">                return null;</span><br><span class="line">            return sortedChildren.get(currenctIndex - 1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public synchronized void wakeup() &#123;</span><br><span class="line">            notifyAll();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>该例子模拟curator实现了一个分布式锁类 <figure class="highlight plain"><figcaption><span>里面包含有```DistributedLock()```, ```lock()```, ```unlock```方法。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```DistributedLock()```初始化方法中，连接zookeeper server，因为是非阻塞的方法，所以在default watcher里面使用了countDownLatch在成功连接了之后唤醒线程，然后预先创建一个持久化节点rootNode，用于之后连接锁的临时节点。</span><br><span class="line"></span><br><span class="line">在测试方法中，实例化了一个```DistributedLock```类之后，接着调用了实例的```lock()```方法，用于获取一个锁。\</span><br><span class="line">具体的实现内容是跟上面所讲的原理差不多：</span><br><span class="line">1. 在rootNode下面创建一个临时节点</span><br><span class="line">2. 获取所有在rootNode下的临时节点</span><br><span class="line">3. 判断当前临时节点是否是最小节点</span><br><span class="line">    1. 如果是，则直接返回，表示已经获取锁</span><br><span class="line">    2. 如果不是，则继续往下走</span><br><span class="line">4. 利用zk.exists判断前一个节点是否存在</span><br><span class="line">    1. 如果节点不存在，意味着已经被删，返回值是空值，则当前线程获得锁。</span><br><span class="line">    2. 如果节点存在，会同时注册watcher，用于监听前一个节点是否删除。==判断和注册wathcer应该要满足原子性，还需要深入研究zk如何处理的==</span><br><span class="line">5. 如果前一个节点是存在的，当前线程会进入等待，然后等待被watcher的回调唤醒。</span><br><span class="line"></span><br><span class="line">注意在判断前节点是否存在和休眠是在一个同步块里面的，锁对象是当前的```DistributedLock```实例化对象。而且watcher也是调用了同步方法，所对象也是```DistributedLock```实例化对象。\</span><br><span class="line">这样做的原因是，防止已经注册了watcher，这时候当前线程还没有进入等待，而前一个节点已经被删除，调用了watcher唤醒线程。因为线程还没有挂起，所以唤醒无效，之后线程又进入等待，导致不会再被唤醒，进入死锁。\</span><br><span class="line">而利用同步块的话，假如线程还未进入等待，这时候前节点被删除，watcher尝试唤醒线程，但是因为调用的是同步快方法，该方法的锁对象被当前线程占用着，导致watcher挂起，直到当前线程休眠释放锁之后才会被执行。所以这时候就能真正唤醒线程。</span><br><span class="line"></span><br><span class="line">该例子只是简单的实现了获得锁跟释放锁，但是一些细节的东西还未考虑到，比如锁的重入。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 3. Curator Recipes</span><br><span class="line">Curator Recipes提供了Zookeeper分布式锁的实现，方便使用。其实现原理跟上述类似。</span><br><span class="line"></span><br><span class="line">使用方法如下</span><br><span class="line"></span><br><span class="line">引入curator依赖</span><br></pre></td></tr></table></figure></p>
-<dependency>
-    <groupid>org.apache.curator</groupid>
-    <artifactid>curator-recipes</artifactid>
-    <version>2.6.0</version>
-</dependency>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>package com.study.test;</p>
-<p>import org.apache.curator.framework.CuratorFramework;<br>import org.apache.curator.framework.CuratorFrameworkFactory;<br>import org.apache.curator.framework.recipes.locks.InterProcessMutex;<br>import org.apache.curator.retry.ExponentialBackoffRetry;<br>import org.junit.Test;</p>
-<p>public class CuratorTest {<br>    @Test<br>    public void process1() throws Exception {</p>
-<pre><code>    CuratorFramework cf = CuratorFrameworkFactory.builder()
-            .connectString(&quot;192.168.99.100:2181&quot;)
-            .retryPolicy(new ExponentialBackoffRetry(1000, 3))
-            .sessionTimeoutMs(2000)
-            .build();
-    cf.start();
-
-    InterProcessMutex lock = new InterProcessMutex(cf, &quot;/distribute-lock&quot;);
-    lock.acquire();
-    System.out.println(&quot;process1 got the lock, do something&quot;);
-    Thread.sleep(10000);
-    lock.release();
-}
-
-@Test
-public void process2() throws Exception {
-
-    CuratorFramework cf = CuratorFrameworkFactory.builder()
-            .connectString(&quot;192.168.99.100:2181&quot;)
-            .retryPolicy(new ExponentialBackoffRetry(1000, 3))
-            .sessionTimeoutMs(2000)
-            .build();
-    cf.start();
-
-    InterProcessMutex lock = new InterProcessMutex(cf, &quot;/distribute-lock&quot;);
-    lock.acquire();
-    System.out.println(&quot;process2 got the lock, do something&quot;);
-    lock.release();
-}</code></pre><p>}</p>
-<pre><code>该例子模仿了利用curator分布式锁同步两个进程process1, process2的例子。
-
-process1获取到锁之后，休眠10秒钟，用于模拟任务。这时候开启process2，因为process1的锁还未释放，所以process2处于等待中，知道process1锁释放。
-
-
-
-
-## 4. Curator跟redis比较
-简单来说，redis的锁的实现比较简单，性能页比较高效，但是zookeeper来实现分布式锁要比redis安全可靠。
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/06/distributed-lock-zookeeper/" data-id="ck07krcwb0001m4vapb3fg3c0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/09/06/hello-world/" class="article-date">
-  <time datetime="2019-09-06T02:31:00.665Z" itemprop="datePublished">2019-09-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/06/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/06/hello-world/" data-id="ck07knwf20000mgvano4b12vr" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
 
 </section>
         
