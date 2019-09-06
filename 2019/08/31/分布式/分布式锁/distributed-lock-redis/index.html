@@ -5,19 +5,20 @@
   
 
   
-  <title>Hexo</title>
+  <title>分布式锁-redis实现 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="redis 官网关于distributed lock的讨论 分布式锁redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果">
+  <meta name="description" content="redis 官网关于distributed lock的讨论 redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果会是“o">
+<meta name="keywords" content="redis,分布式锁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/2019/09/06/distributed-lock-redis/index.html">
+<meta property="og:title" content="分布式锁-redis实现">
+<meta property="og:url" content="http://yoursite.com/2019/08/31/分布式/分布式锁/distributed-lock-redis/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="redis 官网关于distributed lock的讨论 分布式锁redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果">
+<meta property="og:description" content="redis 官网关于distributed lock的讨论 redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果会是“o">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-14T13:54:04.097Z">
+<meta property="og:updated_time" content="2019-09-06T04:04:03.976Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="redis 官网关于distributed lock的讨论 分布式锁redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果">
+<meta name="twitter:title" content="分布式锁-redis实现">
+<meta name="twitter:description" content="redis 官网关于distributed lock的讨论 redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果会是“o">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -64,20 +65,30 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-distributed-lock-redis" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-分布式/分布式锁/distributed-lock-redis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/09/06/distributed-lock-redis/" class="article-date">
-  <time datetime="2019-09-06T03:40:15.383Z" itemprop="datePublished">2019-09-06</time>
+    <a href="/2019/08/31/分布式/分布式锁/distributed-lock-redis/" class="article-date">
+  <time datetime="2019-08-31T09:54:54.000Z" itemprop="datePublished">2019-08-31</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      分布式锁-redis实现
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <p><a href="http://www.redis.cn/topics/distlock.html" target="_blank" rel="noopener">redis 官网关于distributed lock的讨论</a></p>
-<h1 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h1><p>redis分布式锁有多种实现方式。</p>
+<p>redis分布式锁有多种实现方式。</p>
 <ul>
 <li>利用set命令</li>
 <li>RedLock</li>
@@ -147,19 +158,30 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/06/distributed-lock-redis/" data-id="ck07krcvw0000m4vak6ysngjx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/31/分布式/分布式锁/distributed-lock-redis/" data-id="ck07lgu30000a44vae0ydfmc0" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式锁/">分布式锁</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
+    <a href="/2019/09/06/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
   
-    <a href="/2019/09/06/distributed-lock-zookeeper/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">分布式锁-zookeeper实现</div>
     </a>
   
 </nav>
@@ -175,15 +197,29 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式锁/">分布式锁</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/分布式锁/" style="font-size: 10px;">分布式锁</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
     </div>
   </div>
 
@@ -196,15 +232,15 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
       <ul>
         
           <li>
-            <a href="/2019/09/06/distributed-lock-redis/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/06/distributed-lock-zookeeper/">(no title)</a>
-          </li>
-        
-          <li>
             <a href="/2019/09/06/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/31/分布式/分布式锁/distributed-lock-redis/">分布式锁-redis实现</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/">分布式锁-zookeeper实现</a>
           </li>
         
       </ul>

@@ -5,18 +5,19 @@
   
 
   
-  <title>Hexo</title>
+  <title>分布式锁-zookeeper实现 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="实现原理curator官网-能实现的功能 1. zookeeper分布式锁实现原理zookeeper有一种临时类型的节点和顺序节点，并且节点删除的时候会通知客户端。可以利用这些特性，做成分布式锁。  进程1向zookeeper创建一个节点，该节点的编号假设是5 拿出所有的节点，判断当前节点是否是最小节点 如果是，则获取锁 如果不是，则让该节点注册watcher，检测前一个节点有没有被删除。并且进行">
+<meta name="keywords" content="redis,分布式锁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/2019/09/06/distributed-lock-zookeeper/index.html">
+<meta property="og:title" content="分布式锁-zookeeper实现">
+<meta property="og:url" content="http://yoursite.com/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="实现原理curator官网-能实现的功能 1. zookeeper分布式锁实现原理zookeeper有一种临时类型的节点和顺序节点，并且节点删除的时候会通知客户端。可以利用这些特性，做成分布式锁。  进程1向zookeeper创建一个节点，该节点的编号假设是5 拿出所有的节点，判断当前节点是否是最小节点 如果是，则获取锁 如果不是，则让该节点注册watcher，检测前一个节点有没有被删除。并且进行">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-06T03:35:43.243Z">
+<meta property="og:updated_time" content="2019-09-06T04:04:35.791Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="分布式锁-zookeeper实现">
 <meta name="twitter:description" content="实现原理curator官网-能实现的功能 1. zookeeper分布式锁实现原理zookeeper有一种临时类型的节点和顺序节点，并且节点删除的时候会通知客户端。可以利用这些特性，做成分布式锁。  进程1向zookeeper创建一个节点，该节点的编号假设是5 拿出所有的节点，判断当前节点是否是最小节点 如果是，则获取锁 如果不是，则让该节点注册watcher，检测前一个节点有没有被删除。并且进行">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -64,15 +65,25 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-distributed-lock-zookeeper" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-分布式/分布式锁/distributed-lock-zookeeper" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/09/06/distributed-lock-zookeeper/" class="article-date">
-  <time datetime="2019-09-06T03:40:15.383Z" itemprop="datePublished">2019-09-06</time>
+    <a href="/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/" class="article-date">
+  <time datetime="2019-08-31T09:54:54.000Z" itemprop="datePublished">2019-08-31</time>
 </a>
     
   </div>
   <div class="article-inner">
     
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      分布式锁-zookeeper实现
+    </h1>
+  
+
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
@@ -146,29 +157,26 @@ process1获取到锁之后，休眠10秒钟，用于模拟任务。这时候开�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/06/distributed-lock-zookeeper/" data-id="ck07krcwb0001m4vapb3fg3c0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/" data-id="ck07lgu32000d44vaz7e8oa4r" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式锁/">分布式锁</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2019/09/06/distributed-lock-redis/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/08/31/分布式/分布式锁/distributed-lock-redis/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          分布式锁-redis实现
         
       </div>
     </a>
   
-  
-    <a href="/2019/09/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
   
 </nav>
 
@@ -183,15 +191,29 @@ process1获取到锁之后，休眠10秒钟，用于模拟任务。这时候开�
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式锁/">分布式锁</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/分布式锁/" style="font-size: 10px;">分布式锁</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
     </div>
   </div>
 
@@ -204,15 +226,15 @@ process1获取到锁之后，休眠10秒钟，用于模拟任务。这时候开�
       <ul>
         
           <li>
-            <a href="/2019/09/06/distributed-lock-redis/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/06/distributed-lock-zookeeper/">(no title)</a>
-          </li>
-        
-          <li>
             <a href="/2019/09/06/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/31/分布式/分布式锁/distributed-lock-redis/">分布式锁-redis实现</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/">分布式锁-zookeeper实现</a>
           </li>
         
       </ul>
