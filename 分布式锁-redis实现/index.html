@@ -11,11 +11,11 @@
 <meta name="keywords" content="redis,分布式锁">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式锁-redis实现">
-<meta property="og:url" content="http://yoursite.com/2019/08/31/分布式/分布式锁/distributed-lock-redis/index.html">
+<meta property="og:url" content="http://yoursite.com/分布式锁-redis实现/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="redis 官网关于distributed lock的讨论 redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果会是“o">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-06T04:04:03.976Z">
+<meta property="og:updated_time" content="2019-09-06T04:07:05.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式锁-redis实现">
 <meta name="twitter:description" content="redis 官网关于distributed lock的讨论 redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果会是“o">
@@ -67,8 +67,8 @@
       <div class="outer">
         <section id="main"><article id="post-分布式/分布式锁/distributed-lock-redis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/08/31/分布式/分布式锁/distributed-lock-redis/" class="article-date">
-  <time datetime="2019-08-31T09:54:54.000Z" itemprop="datePublished">2019-08-31</time>
+    <a href="/分布式锁-redis实现/" class="article-date">
+  <time datetime="2019-04-13T16:00:00.000Z" itemprop="datePublished">2019-04-14</time>
 </a>
     
   </div>
@@ -158,7 +158,7 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/31/分布式/分布式锁/distributed-lock-redis/" data-id="ck07lgu30000a44vae0ydfmc0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/分布式锁-redis实现/" data-id="ck07lgu30000a44vae0ydfmc0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式锁/">分布式锁</a></li></ul>
@@ -169,7 +169,7 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
     
 <nav id="article-nav">
   
-    <a href="/2019/09/06/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
@@ -179,7 +179,7 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
     </a>
   
   
-    <a href="/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/分布式锁-zookeeper实现/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">分布式锁-zookeeper实现</div>
     </a>
@@ -219,7 +219,7 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
     </div>
   </div>
 
@@ -232,15 +232,15 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
       <ul>
         
           <li>
-            <a href="/2019/09/06/hello-world/">Hello World</a>
+            <a href="/hello-world/">Hello World</a>
           </li>
         
           <li>
-            <a href="/2019/08/31/分布式/分布式锁/distributed-lock-redis/">分布式锁-redis实现</a>
+            <a href="/分布式锁-redis实现/">分布式锁-redis实现</a>
           </li>
         
           <li>
-            <a href="/2019/08/31/分布式/分布式锁/distributed-lock-zookeeper/">分布式锁-zookeeper实现</a>
+            <a href="/分布式锁-zookeeper实现/">分布式锁-zookeeper实现</a>
           </li>
         
       </ul>
