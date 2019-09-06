@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="页面静态化和页面缓存"><meta name="keywords" content="静态化,页面缓存"><meta name="author" content="Labin"><meta name="copyright" content="Labin"><title>页面静态化和页面缓存 | Labin博客分享</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-静态化页面"><span class="toc-text">1. 静态化页面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-静态化页面的数据分为两部分"><span class="toc-text">1.1 静态化页面的数据分为两部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-生成的文件一般放在那里"><span class="toc-text">1.2 生成的文件一般放在那里</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-静态化页面优缺点"><span class="toc-text">1.3 静态化页面优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-缓存页面数据和利用模板文件"><span class="toc-text">2. 缓存页面数据和利用模板文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-架构"><span class="toc-text">2.1 架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-为什么同时需要nginx本地缓存和redis缓存"><span class="toc-text">2.1.1 为什么同时需要nginx本地缓存和redis缓存</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/labin-share/labin-share.github.io/master/img/avatar.png"></div><div class="author-info__name text-center">Labin</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">6</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">13</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Labin博客分享</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">页面静态化和页面缓存</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-07-11</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="1-静态化页面"><a href="#1-静态化页面" class="headerlink" title="1. 静态化页面"></a>1. 静态化页面</h2><p>页面的静态化是指，对于一些访问量比较高的页面，可以考虑将页面所需要的数据，直接和模板文件结合，然后生成对应的html，然后访问的时候就直接返回该html文件即可。</p>
+<p>比如有一个网站的主页，它的绝大部分的数据是不经常变更的，可以直接把这部分的数据直接和模板文件生成html文件。</p>
+<p>模板引擎可以使用<a href="http://freemarker.foofun.cn/" target="_blank" rel="noopener">freemarker</a></p>
+<h3 id="1-1-静态化页面的数据分为两部分"><a href="#1-1-静态化页面的数据分为两部分" class="headerlink" title="1.1 静态化页面的数据分为两部分"></a>1.1 静态化页面的数据分为两部分</h3><ol>
+<li>不经常变化的数据</li>
+<li>经常变化的数据</li>
+</ol>
+<p>对于不经常变化的数据，就可以直接跟模板文件结合，在数据变更的时候重新生成文件即可。</p>
+<p>对于经常变化的数据，就不方便与模板文件结合，而是采用ajax去获取。</p>
+<h3 id="1-2-生成的文件一般放在那里"><a href="#1-2-生成的文件一般放在那里" class="headerlink" title="1.2 生成的文件一般放在那里"></a>1.2 生成的文件一般放在那里</h3><p>可以nginx 服务器下</p>
+<ul>
+<li>利用nginx做静态分离， 降低后台服务器的压力</li>
+<li>nginx的并发数要比tomcat高的多</li>
+</ul>
+<p>比如在数据在数据变更的时候，应用服务器可以发送消息到消息队列上，nginx服务器s1可以监听队列的消息，然后生成对应的html文件。如果存在多台nginx服务器，可以在s1生成之后，利用linux的rysnc+inotify拷贝到其它的nginx服务器。</p>
+<p>除此之外，也可以放在==文件服务器==下</p>
+<h3 id="1-3-静态化页面优缺点"><a href="#1-3-静态化页面优缺点" class="headerlink" title="1.3 静态化页面优缺点"></a>1.3 静态化页面优缺点</h3><p>优点：</p>
+<ul>
+<li>避免每次访问页面的时候都去查询数据，然后处理数据。从而提高了效率。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>文件过多<ul>
+<li>对于中小型网站，静态化的页面不是很多，可以采取这种方法。</li>
+<li>但是对于大型的网站，会造成页面过多。占用太多空间，而且在这些文件都要放在nginx服务器下，如果nginx服务器多的情况下，同步也消耗很大。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-缓存页面数据和利用模板文件"><a href="#2-缓存页面数据和利用模板文件" class="headerlink" title="2. 缓存页面数据和利用模板文件"></a>2. 缓存页面数据和利用模板文件</h2><p>静态化页面对于大型网站来说，生成的html文件过多。可以采取另外的方法。</p>
+<p>将页面所需要的数据放在缓存中，然后结合模板，动态的生成html返回给客户端，这种方法主要是利用了缓存比数据库快的原理。</p>
+<h3 id="2-1-架构"><a href="#2-1-架构" class="headerlink" title="2.1 架构"></a>2.1 架构</h3><ol>
+<li>一般会有nginx层，会存放有页面所需要的数据，以及一些模板文件。就是在nginx的本地缓存，然后当访问页面的时候，nginx直接用模板和缓存的数据，构造成页面返回给客户端。</li>
+<li>因为nginx的缓存空间较小，所以只能保存热点数据，并且需要设置过期时间，当本地缓存没有数据，所以还有一个redis层，redis层会存有页面的数据中缓存。当nginx找不到，才会去redis拿。</li>
+<li>当数据有改变的时候，需要及时的更新redis缓存，而nginx的本地缓存则不需要了，因为有过期时间，而且这些数据是属于不需要及时的数据，所以业务上是允许的。</li>
+<li>这样做的原因是减少了前面所说的html文件过多的情况。</li>
+</ol>
+<h4 id="2-1-1-为什么同时需要nginx本地缓存和redis缓存"><a href="#2-1-1-为什么同时需要nginx本地缓存和redis缓存" class="headerlink" title="2.1.1 为什么同时需要nginx本地缓存和redis缓存"></a>2.1.1 为什么同时需要nginx本地缓存和redis缓存</h4><ol>
+<li>本地缓存<ul>
+<li>有了redis还需要使用本地缓存的原因是为了减少网络的开销。</li>
+<li>但是本地的缓存一般都比较小，可以缓存热点数据X</li>
+<li>本地缓存一般放置的是不经常变更的数据，并且需要设置过期时间，放置数据变更造成过期的数据。</li>
+</ul>
+</li>
+<li>redis缓存<ul>
+<li>一般利用了redis操作比数据库快的优点，减少对数据库的访问，提高并发量。</li>
+</ul>
+</li>
+</ol>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Labin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/posts/解决方案/页面静态化和页面缓存/">http://yoursite.com/posts/解决方案/页面静态化和页面缓存/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/静态化/">静态化</a><a class="post-meta__tags" href="/tags/页面缓存/">页面缓存</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/posts/分布式/分布式计算/MapReduce/"><i class="fa fa-chevron-left">  </i><span>MapReduce</span></a></div><div class="next-post pull-right"><a href="/posts/解决方案/登录验证/"><span>登录验证</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2019 By Labin</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
