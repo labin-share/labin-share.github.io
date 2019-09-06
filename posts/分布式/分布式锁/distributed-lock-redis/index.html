@@ -11,7 +11,7 @@
 <meta name="keywords" content="redis,分布式锁">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式锁-redis实现">
-<meta property="og:url" content="http://yoursite.com/分布式/分布式锁/distributed-lock-redis/index.html">
+<meta property="og:url" content="http://yoursite.com/posts/分布式/分布式锁/distributed-lock-redis/index.html">
 <meta property="og:site_name" content="Labin博客分享">
 <meta property="og:description" content="redis 官网关于distributed lock的讨论 redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果会是“o">
 <meta property="og:locale" content="en">
@@ -20,7 +20,7 @@
 <meta name="twitter:title" content="分布式锁-redis实现">
 <meta name="twitter:description" content="redis 官网关于distributed lock的讨论 redis分布式锁有多种实现方式。  利用set命令 RedLock Redission  利用set命令主要是利用了NX参数，只有当key不存在的时候，不会被重新设置。 比如，使用以下指令设置mykey，并且过期时间是5秒，只有mykey不存在的时候才会创建成功。 1set mykey 1 EX 5 NX  所以第一次执行的结果会是“o">
   
-    <link rel="alternate" href="/posts/atom.xml" title="Labin博客分享" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Labin博客分享" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -28,7 +28,7 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/posts/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 </html>
 <body>
@@ -39,7 +39,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/posts/" id="logo">Labin博客分享</a>
+        <a href="/" id="logo">Labin博客分享</a>
       </h1>
       
     </div>
@@ -47,14 +47,14 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/posts/">Home</a>
+          <a class="main-nav-link" href="/">Home</a>
         
-          <a class="main-nav-link" href="/posts/archives">Archives</a>
+          <a class="main-nav-link" href="/archives">Archives</a>
         
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/posts/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
@@ -158,10 +158,10 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/分布式/分布式锁/distributed-lock-redis/" data-id="ck07lgu30000a44vae0ydfmc0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/posts/分布式/分布式锁/distributed-lock-redis/" data-id="ck07lgu30000a44vae0ydfmc0" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/posts/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/posts/tags/分布式锁/">分布式锁</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式锁/">分布式锁</a></li></ul>
 
     </footer>
   </div>
@@ -200,7 +200,7 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/posts/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/posts/tags/分布式锁/">分布式锁</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式锁/">分布式锁</a></li></ul>
     </div>
   </div>
 
@@ -210,7 +210,7 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/posts/tags/redis/" style="font-size: 10px;">redis</a> <a href="/posts/tags/分布式锁/" style="font-size: 10px;">分布式锁</a>
+      <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/分布式锁/" style="font-size: 10px;">分布式锁</a>
     </div>
   </div>
 
@@ -219,7 +219,7 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/posts/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/posts/archives/2019/04/">April 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
     </div>
   </div>
 
@@ -263,9 +263,9 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
     </div>
     <nav id="mobile-nav">
   
-    <a href="/posts/" class="mobile-nav-link">Home</a>
+    <a href="/" class="mobile-nav-link">Home</a>
   
-    <a href="/posts/archives" class="mobile-nav-link">Archives</a>
+    <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
     
@@ -273,11 +273,11 @@ RedLock 不能完全保证正确性，其根本原因出现在RedLock的锁有�
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/posts/fancybox/jquery.fancybox.css">
-  <script src="/posts/fancybox/jquery.fancybox.pack.js"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/posts/js/script.js"></script>
+<script src="/js/script.js"></script>
 
 
 
